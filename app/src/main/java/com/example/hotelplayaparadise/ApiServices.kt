@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 // Retrofit Service Interface for KPI Data
 interface ApiService {
-    @GET("Reservacion/confirmadas")
-    fun getKPIData(): Call<List<ReservationData>>
 
+    @GET("topClientesPorIngreso")
+    fun getClientData(): Call<List<ClienteIngreso>>
 }

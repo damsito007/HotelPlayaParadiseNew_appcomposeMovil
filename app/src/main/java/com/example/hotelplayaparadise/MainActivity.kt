@@ -86,22 +86,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import kotlin.random.Random
 
-//Interface del servicio de la api
-interface ApiService2 {
-    @GET("Reservacion/Todas")
-    fun getingresocliente(): Call<List<ClienteIngreso>>
-}
-//Instancia de Retrofit
-object RetrofitInstance2 {
-    private const val BASE_URL = "https://xmcf8cn0-5069.use.devtunnels.ms/"
-    val apiService2: ApiService2 by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiService2::class.java)
-    }
-}
+
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -255,7 +241,6 @@ fun HomeScreen(navController: NavHostController) {
         }
     )
 }
-//Contenido del home
 @Composable
 fun HomeContent() {
     var clienteingre by remember { mutableStateOf<List<ClienteIngreso>>(emptyList()) }
@@ -263,19 +248,20 @@ fun HomeContent() {
     var error by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
-
-        RetrofitInstance2.apiService2.getingresocliente().enqueue(object :
-            Callback<List<ClienteIngreso>> {
+        RetrofitClient.apiService.getClientData().enqueue(object : Callback<List<ClienteIngreso>> {
             override fun onResponse(call: Call<List<ClienteIngreso>>, response: Response<List<ClienteIngreso>>) {
                 if (response.isSuccessful) {
                     clienteingre = response.body() ?: emptyList()
+                    loading = false
                 } else {
                     error = "Error: ${response.message()}"
+                    loading = false
                 }
             }
 
             override fun onFailure(call: Call<List<ClienteIngreso>>, t: Throwable) {
                 error = "Failed to load data: ${t.message}"
+                loading = false
             }
         })
     }
@@ -284,59 +270,78 @@ fun HomeContent() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 80.dp) // Make space for the fixed button at the bottom
-            ,
+                .padding(bottom = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Title
+            // Título
             Text(
-                text = "Informe del Modelo Tabular",
+                text = "Informe de Clientes por Ingreso",
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 16.dp)
             )
 
-            // Display loading or error message
-            if (loading) {
-                // Barra de carga con color primario de MaterialTheme
-                CircularProgressIndicator(
-                    modifier = Modifier.size(50.dp),
-                    color = MaterialTheme.colorScheme.primary // Usando color primario
-                )
-            } else if (error != null) {
-                Text("Error: $error", style = MaterialTheme.typography.bodyLarge.copy(color = Color.Red))
-            } else {
-
-                // Content displaying all reservation types
-                LazyColumn(modifier = Modifier.weight(1f)) {
-
-                    item {
-                        Text(
-                            text = "Reservaciones Totales:",
-                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            textAlign = TextAlign.Center // Centrar el título
-                        )
-                    }
-
-                    //items(clienteingre) { reservationall ->
-                    //    ReservationCardall(reservationall)
-                    }
-
+            // Estado de carga o error
+            when {
+                loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(50.dp),
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
+                error != null -> {
+                    Text(
+                        text = "Error: $error",
+                        style = MaterialTheme.typography.bodyLarge.copy(color = Color.Red)
+                    )
+                }
+                else -> {
+                    // Listado de clientes
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        item {
+                            Text(
+                                text = "Reservaciones Totales:",
+                                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp),
+                                textAlign = TextAlign.Center
+                            )
+                        }
 
+                        items(clienteingre) { cliente ->
+                            ClienteIngresoCard(cliente)
+                        }
+                    }
+                }
             }
-
         }
-
     }
+}
 
-
+@Composable
+fun ClienteIngresoCard(cliente: ClienteIngreso) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Text(
+            text = "Cliente: ${cliente.nombreCliente}",
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = "Ingreso Total: $${cliente.ingresoTotal}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+    }
+}
 
 
 @Composable
