@@ -87,3 +87,29 @@ data class ClienteIngreso(
     @SerializedName("Clientes[Nombre Clientes]") val nombreCliente: String,
     @SerializedName("[IngresoTotal]") val ingresoTotal: Double
 )
+
+data class HabitacionPrecio(
+    @SerializedName("Habitaciones[Tipo Habitacion]") val tipoHabitacion: String,
+    @SerializedName("Fechas[Anio]") val anio: Int?,  // Puede ser nulo (nullable)
+    @SerializedName("[PrecioPromedioPorNoche]") val precioPromedioPorNoche: Double
+)
+
+data class IngresoAnual(
+    @SerializedName("Fechas[Anio]") val anio: Int,
+    @SerializedName("[Ingresos por Año]") val ingresosPorAnio: Double
+)
+
+data class PrecioTemporada(
+    @SerializedName("Fechas[Temporada]") val temporada: String,
+    @SerializedName("Fechas[Periodo]") val periodo: String,
+    @SerializedName("[PrecioNoche]") val precioNoche: Double
+)
+
+data class ClienteReserva(
+    @SerializedName("Clientes[Metodo Reservacion]") val metodoReservacion: String,
+    @SerializedName("Clientes[Nombre Clientes]") val nombreCliente: String,
+    @SerializedName("Fechas[Num Mes]") val numMes: Int,
+    @SerializedName("Habitaciones[Tipo Habitacion]") val tipoHabitacion: String,
+    @SerializedName("[PrecioNoche]") val precioNoche: Double,
+    @SerializedName("[PrecioPaquete]") val precioPaquete: Int
+)
