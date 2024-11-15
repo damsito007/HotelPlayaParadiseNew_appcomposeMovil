@@ -1,5 +1,6 @@
 package com.example.hotelplayaparadise
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -39,15 +41,20 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemColors
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -67,6 +74,7 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -156,12 +164,11 @@ fun GreetingPreview() {
     }
 }
 
-
-
 @Composable
 fun OpcionesMenuLateral(navController: NavHostController) {
     ModalDrawerSheet(
         // modifier = Modifier.fillMaxSize(),
+        drawerContainerColor = greenstrong,
         content = {
             // Header del menú lateral con información del usuario
             Column(
@@ -174,23 +181,21 @@ fun OpcionesMenuLateral(navController: NavHostController) {
                 Surface(
                     modifier = Modifier.size(80.dp),
                     shape = CircleShape,
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                    color = Color.White
                 ) {
                     Icon(
-                        imageVector = Icons.Default.AccountCircle,
+                        painter = painterResource(id = R.drawable.puesta_de_sol),
                         contentDescription = "Foto de perfil",
-                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp)
+                            .padding(16.dp),
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Usuario", style = MaterialTheme.typography.titleLarge)
-                Text(text = "usuario@example.com", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "Hotel Playa Paradise", style = MaterialTheme.typography.titleLarge, color = Color.White)
             }
 
-            Divider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f))
+            Divider(color = Color.White)
 
             // Opciones del menú
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -198,32 +203,43 @@ fun OpcionesMenuLateral(navController: NavHostController) {
 
                 // Opción Configuración
                 NavigationDrawerItem(
-                    icon = { Icon(imageVector = Icons.Default.Settings, contentDescription = "Configuración") },
-                    label = { Text("Configuración") },
+                    icon = { Icon(imageVector = Icons.Default.Settings, contentDescription = "Configuración", tint = Color.White) }, // Ícono en negro
+                    label = { Text("Configuración", color = Color.White) }, // Texto en negro
                     selected = false,
-                    onClick = { navController.navigate("settings") }
+                    onClick = { navController.navigate("settings") },
+                    colors = NavigationDrawerItemDefaults.colors(unselectedContainerColor = Color.Transparent) // Fondo transparente
                 )
 
                 // Opción Perfil
                 NavigationDrawerItem(
-                    icon = { Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Perfil") },
-                    label = { Text("Perfil") },
+                    icon = { Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Perfil", tint = Color.White) }, // Ícono en negro
+                    label = { Text("Perfil", color = Color.White) }, // Texto en negro
                     selected = false,
-                    onClick = { navController.navigate("profile") }
+                    onClick = { navController.navigate("profile") },
+                    colors = NavigationDrawerItemDefaults.colors(unselectedContainerColor = Color.Transparent) // Fondo transparente
                 )
 
                 // Opción Informe de Satisfacción
                 NavigationDrawerItem(
-                    icon = { Icon(imageVector = Icons.Default.ThumbUp, contentDescription = "Informe de Satisfacción") },
-                    label = { Text("Informe de MongoDB") },
+                    icon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_data_saver_off_24), // Carga el ícono desde drawable
+                            contentDescription = "Informe de MongoDB",
+                            tint = Color.White // Cambia el color del ícono a blanco si es necesario
+                        )
+                    }, // Ícono en negro
+                    label = { Text("Informe de MongoDB", color = Color.White) }, // Texto en negro
                     selected = false,
-                    onClick = { navController.navigate("report") }
+                    onClick = { navController.navigate("report") },
+                    colors = NavigationDrawerItemDefaults.colors(unselectedContainerColor = Color.Transparent) // Fondo transparente
                 )
             }
         }
     )
 }
-//@OptIn(ExperimentalMaterial3Api::class)
+
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -232,30 +248,47 @@ fun HomeScreen(navController: NavHostController) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            //Agregamos el componente para el menu lateral
+            // Agregamos el componente para el menú lateral
             OpcionesMenuLateral(navController)
         },
         content = {
-            Column() {
-                IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                    Icon(Icons.Filled.Menu, contentDescription = "Icon" )
-                }
+            Column {
+                TopAppBar(
+                    modifier = Modifier.height(60.dp), // Ajustamos la altura de la barra superior
+                    title = {
+                        Text(
+                            "Hotel Playa Paradise",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 48.dp)
+                                .padding(bottom = 5.dp )// Aseguramos que el texto no se desplace por el icono
+                                .wrapContentSize(Alignment.Center) // Centramos el texto horizontalmente
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(
+                            onClick = { scope.launch { drawerState.open() } },
+                            modifier = Modifier.padding(start = 8.dp).padding(bottom = 5.dp) // Espaciamos el ícono del borde
+                        ) {
+                            Icon(Icons.Filled.Menu, contentDescription = "Menu Icon")
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = greenstrong, // Usamos el color greenstrong
+                        titleContentColor = Color.White,    // Color del texto
+                        navigationIconContentColor = Color.White // Color del ícono
+                    )
+                )
 
+                    HomeContent()
 
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                //Agregamos el contenido del Home
-                HomeContent()
             }
         }
     )
 }
+
+
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun HomeContent() {
     var clienteingre by remember { mutableStateOf<List<ClienteIngreso>>(emptyList()) }
@@ -807,4 +840,21 @@ fun SettingsScreen(navController: NavHostController) {
             Text("Volver")
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewOpcionesMenuLateral() {
+    val navController = rememberNavController()
+    val drawerState = rememberDrawerState(DrawerValue.Open) // Forzar que esté abierto
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            OpcionesMenuLateral(navController = navController)
+        },
+        content = {
+            // Contenido principal (puede estar vacío para la previsualización del Drawer)
+        }
+    )
 }

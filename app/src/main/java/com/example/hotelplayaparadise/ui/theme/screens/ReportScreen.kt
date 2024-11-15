@@ -25,6 +25,7 @@ import com.example.hotelplayaparadise.R
 import com.example.hotelplayaparadise.ReservacionFactura
 import com.example.hotelplayaparadise.ReservacionTotal
 import com.example.hotelplayaparadise.ReservationData
+import com.example.hotelplayaparadise.ui.theme.theme.greenstrong
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,7 +64,7 @@ interface ApiService {
 
 // Retrofit instance to interact with the API
 object RetrofitInstance {
-    private const val BASE_URL = "https://f5frl5zq-8000.use2.devtunnels.ms/"
+    private const val BASE_URL = "http://apimongopython.centralus.azurecontainer.io:5000/"
     val apiService: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -364,7 +365,7 @@ fun ReportScreen(navController: NavHostController) {
 
                     item {
                         Text(
-                            text = "Total de Pagos por Metodo",
+                            text = "Total de Pagos por Metodo:",
                             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -386,11 +387,11 @@ fun ReportScreen(navController: NavHostController) {
             onClick = { navController.navigate("home") },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D47A1))
+            colors = ButtonDefaults.buttonColors(containerColor = greenstrong)
         ) {
-            Text("Volver", color = Color.White)
+            Text("Volver al Menú", color = Color.White)
         }
     }
 }
@@ -417,7 +418,7 @@ fun ReservationCardall(reservationall: ReservacionTotal) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("ID de Reserva: ${reservationall.id}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF1976D2))
+                Text("ID de Reserva: ${reservationall.id}", style = MaterialTheme.typography.bodyLarge, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -430,7 +431,7 @@ fun ReservationCardall(reservationall: ReservacionTotal) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Habitación ID: ${reservationall.habitacionId}", style = MaterialTheme.typography.bodyMedium)
+                Text("Habitación ID: ${reservationall.habitacionId}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -443,7 +444,7 @@ fun ReservationCardall(reservationall: ReservacionTotal) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Estado: ${reservationall.estadoReservacion}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF43A047))
+                Text("Estado: ${reservationall.estadoReservacion}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -456,7 +457,7 @@ fun ReservationCardall(reservationall: ReservacionTotal) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Paquete: ${reservationall.paquete.nombrePaquete}", style = MaterialTheme.typography.bodyMedium)
+                Text("Paquete: ${reservationall.paquete.nombrePaquete}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -469,7 +470,7 @@ fun ReservationCardall(reservationall: ReservacionTotal) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Descripción: ${reservationall.paquete.descripcion}", style = MaterialTheme.typography.bodyMedium)
+                Text("Descripción: ${reservationall.paquete.descripcion}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -483,7 +484,7 @@ fun ReservationCardall(reservationall: ReservacionTotal) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Costo: \$${reservationall.paquete.costo}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFFD32F2F))
+                Text("Costo: \$${reservationall.paquete.costo}", style = MaterialTheme.typography.bodyMedium, color = Color.Black)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -509,7 +510,7 @@ fun ReservationCardall(reservationall: ReservacionTotal) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Fecha de Llegada: ${reservationall.fechas.llegada}", style = MaterialTheme.typography.bodySmall)
+                Text("Fecha de Llegada: ${reservationall.fechas.llegada}", style = MaterialTheme.typography.bodyMedium)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -522,7 +523,7 @@ fun ReservationCardall(reservationall: ReservacionTotal) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Fecha de Salida: ${reservationall.fechas.salida}", style = MaterialTheme.typography.bodySmall)
+                Text("Fecha de Salida: ${reservationall.fechas.salida}", style = MaterialTheme.typography.bodyMedium)
             }
         }
     }
@@ -551,7 +552,7 @@ fun ReservationCard(reservation: ReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("ID de Reserva: ${reservation.id}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF1976D2))
+                Text("ID de Reserva: ${reservation.id}", style = MaterialTheme.typography.bodyLarge, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -564,7 +565,7 @@ fun ReservationCard(reservation: ReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Habitación ID: ${reservation.habitacionId}", style = MaterialTheme.typography.bodyMedium)
+                Text("Habitación ID: ${reservation.habitacionId}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -577,7 +578,7 @@ fun ReservationCard(reservation: ReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Estado: ${reservation.estadoReservacion}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF43A047))
+                Text("Estado: ${reservation.estadoReservacion}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -590,7 +591,7 @@ fun ReservationCard(reservation: ReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Paquete: ${reservation.paquete.nombrePaquete}", style = MaterialTheme.typography.bodyMedium)
+                Text("Paquete: ${reservation.paquete.nombrePaquete}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -603,7 +604,7 @@ fun ReservationCard(reservation: ReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Descripción: ${reservation.paquete.descripcion}", style = MaterialTheme.typography.bodyMedium)
+                Text("Descripción: ${reservation.paquete.descripcion}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -616,7 +617,7 @@ fun ReservationCard(reservation: ReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Costo: \$${reservation.paquete.costo}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFFD32F2F))
+                Text("Costo: \$${reservation.paquete.costo}", style = MaterialTheme.typography.bodyMedium)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -642,7 +643,7 @@ fun ReservationCard(reservation: ReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Fecha de Llegada: ${reservation.fechas.llegada}", style = MaterialTheme.typography.bodySmall)
+                Text("Fecha de Llegada: ${reservation.fechas.llegada}", style = MaterialTheme.typography.bodyMedium)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -655,7 +656,7 @@ fun ReservationCard(reservation: ReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Fecha de Salida: ${reservation.fechas.salida}", style = MaterialTheme.typography.bodySmall)
+                Text("Fecha de Salida: ${reservation.fechas.salida}", style = MaterialTheme.typography.bodyMedium)
             }
         }
     }
@@ -685,7 +686,7 @@ fun NewReservationCard(reservation: NewReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Estado: ${reservation.id}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF43A047))
+                Text("Estado: ${reservation.id}", style = MaterialTheme.typography.bodyLarge, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -698,7 +699,7 @@ fun NewReservationCard(reservation: NewReservationData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Total Reservaciones: ${reservation.totalReservaciones}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF1976D2))
+                Text("Total Reservaciones: ${reservation.totalReservaciones}", style = MaterialTheme.typography.bodyMedium)
             }
         }
     }
@@ -728,7 +729,7 @@ fun IngresoCard(ingreso: IngresoData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Paquete: ${ingreso.id}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFFFFA000))
+                Text("Paquete: ${ingreso.id}", style = MaterialTheme.typography.bodyLarge, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -741,7 +742,7 @@ fun IngresoCard(ingreso: IngresoData) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Total Ingresos: \$${ingreso.totalIngresos}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF1976D2))
+                Text("Total Ingresos: \$${ingreso.totalIngresos}", style = MaterialTheme.typography.bodyMedium)
             }
         }
     }
@@ -770,7 +771,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("ID de Reserva: ${facturaall.id}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFFFFA000))
+                Text("ID de Reserva: ${facturaall.id}", style = MaterialTheme.typography.bodyLarge, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -782,7 +783,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Fecha: ${facturaall.fecha}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF1976D2))
+                Text("Fecha: ${facturaall.fecha}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -794,7 +795,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Estado: ${facturaall.estado}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF388E3C))
+                Text("Estado: ${facturaall.estado}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -819,7 +820,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Método de Pago: ${facturaall.tipoTransaccion.metodoPago}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF388E3C))
+                Text("Método de Pago: ${facturaall.tipoTransaccion.metodoPago}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -843,7 +844,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Moneda: ${facturaall.tipoTransaccion.moneda}", style = MaterialTheme.typography.bodySmall, color = Color(0xFF388E3C))
+                Text("Moneda: ${facturaall.tipoTransaccion.moneda}", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -856,7 +857,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Monto Base: \$${facturaall.detalleMonto.montoBase}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFFFFA000))
+                Text("Monto Base: \$${facturaall.detalleMonto.montoBase}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -868,7 +869,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Impuestos: \$${facturaall.detalleMonto.impuestos}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF1976D2))
+                Text("Impuestos: \$${facturaall.detalleMonto.impuestos}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -880,7 +881,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Descuentos: -\$${facturaall.detalleMonto.descuentos}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF388E3C))
+                Text("Descuentos: -\$${facturaall.detalleMonto.descuentos}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -892,7 +893,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Costo de Paquetes: \$${facturaall.detalleMonto.costoPaquetes}", style = MaterialTheme.typography.bodyMedium, color = Color(0xFFFFA000))
+                Text("Costo de Paquetes: \$${facturaall.detalleMonto.costoPaquetes}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -904,7 +905,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Monto Total: \$${facturaall.detalleMonto.montoTotal}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF1976D2))
+                Text("Monto Total: \$${facturaall.detalleMonto.montoTotal}", style = MaterialTheme.typography.bodyLarge)
             }
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -920,7 +921,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Fecha: ${pago.fecha}", style = MaterialTheme.typography.bodySmall, color = Color(0xFF1976D2))
+                    Text("Fecha: ${pago.fecha}", style = MaterialTheme.typography.bodySmall)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
@@ -930,7 +931,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Monto: \$${pago.monto}", style = MaterialTheme.typography.bodySmall, color = Color(0xFFFFA000))
+                    Text("Monto: \$${pago.monto}", style = MaterialTheme.typography.bodySmall)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
@@ -940,7 +941,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Método de Pago: ${pago.metodoPago}", style = MaterialTheme.typography.bodySmall, color = Color(0xFF388E3C))
+                    Text("Método de Pago: ${pago.metodoPago}", style = MaterialTheme.typography.bodySmall)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
@@ -950,7 +951,7 @@ fun FacturasTodasCard(facturaall: ReservacionFactura) {
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Información de Pago: ${pago.informacionPago}", style = MaterialTheme.typography.bodySmall, color = Color(0xFF1976D2))
+                    Text("Información de Pago: ${pago.informacionPago}", style = MaterialTheme.typography.bodySmall)
                 }
             }
         }
@@ -982,7 +983,7 @@ fun PagoCard(pago: PagoTotalPorMetodo) {
                 Text(
                     text = "ID de Pago: ${pago.id}",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color(0xFF1976D2) // Azul
+                    color = Color.Gray // Azul
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -999,7 +1000,7 @@ fun PagoCard(pago: PagoTotalPorMetodo) {
                 Text(
                     text = "Total Pagos: \$${pago.totalPagos}",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFFFFA000) // Naranja
+                    color = Color.Black // Naranja
                 )
             }
         }

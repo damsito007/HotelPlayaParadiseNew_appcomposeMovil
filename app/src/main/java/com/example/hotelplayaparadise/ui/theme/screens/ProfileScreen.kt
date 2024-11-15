@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -26,8 +27,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.hotelplayaparadise.R
+import com.example.hotelplayaparadise.ui.theme.theme.greenstrong
 
 
 @Composable
@@ -44,26 +48,35 @@ fun ProfileScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .background(Brush.verticalGradient(listOf(Color(0xFF0D47A1), Color(0xFF6A1B9A)))), // Fondo gradiente
+            .background(
+                Brush.sweepGradient(
+                    0.0f to Color(0xFF238C98), // Color inicial: verde azulado
+                    0.5f to Color(0xFF6A1B9A), // Color intermedio: púrpura oscuro
+                    1.0f to Color(0xFF238C98), // Color final: verde azulado
+                    center = Offset(0.5f, 0.5f)
+                )
+            ), // Fondo gradiente
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top // Organiza elementos desde la parte superior
     ) {
         // Imagen de perfil circular
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground), // Reemplaza con un recurso de imagen válido
+            painter = painterResource(id = R.drawable.baseline_person_24),
+
             contentDescription = "Imagen de perfil",
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape)
                 .border(2.dp, Color.White, CircleShape)
-                .padding(8.dp)
+                .padding(8.dp),
+            colorFilter = ColorFilter.tint(Color.White)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Nombre de usuario
         Text(
-            text = "Juan Pérez", // Reemplaza con el nombre del usuario
+            text = "Team Paradise", // Reemplaza con el nombre del usuario
             style = MaterialTheme.typography.headlineMedium.copy(
                 color = Color.White,
                 fontWeight = FontWeight.Bold
@@ -74,7 +87,7 @@ fun ProfileScreen(navController: NavHostController) {
 
         // Email del usuario
         Text(
-            text = "juan.perez@example.com", // Reemplaza con el correo del usuario
+            text = "HotelPlayaParadise@outlook.com", // Reemplaza con el correo del usuario
             style = MaterialTheme.typography.bodyLarge.copy(color = Color.LightGray)
         )
 
@@ -112,11 +125,11 @@ fun ProfileScreen(navController: NavHostController) {
         Button(
             onClick = { navController.navigate("home") },
             modifier = Modifier
-                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally)
                 .padding(16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D47A1))
+            colors = ButtonDefaults.buttonColors(containerColor = greenstrong)
         ) {
-            Text(text = "Volver", color = Color.White)
+            Text(text = "Volver al Menú", color = Color.White)
         }
     }
 }
