@@ -90,7 +90,7 @@ fun ReportScreen(navController: NavHostController) {
 
     // Fetch reservation data from all three endpoints on Composable load
     LaunchedEffect(Unit) {
-        
+
         // firts endpoint
 
         // Fetching data from the first endpoint
@@ -244,6 +244,57 @@ fun ReportScreen(navController: NavHostController) {
                 // Content displaying all reservation types
                 LazyColumn(modifier = Modifier.weight(1f)) {
 
+
+                    // Título para las Reservaciones por estado
+                    item {
+                        Text(
+                            text = "Reservaciones por estado:",
+                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                            textAlign = TextAlign.Center // Centrar el título
+                        )
+                    }
+
+                    // Displaying new reservations by estado
+                    items(newReservations) { newReservation ->
+                        NewReservationCard(newReservation)
+                    }
+
+                    // Título para los Ingresos por paquete
+                    item {
+                        Text(
+                            text = "Ingresos por tipo de paquete:",
+                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                            textAlign = TextAlign.Center // Centrar el título
+                        )
+                    }
+
+                    // Displaying ingresos data
+                    items(ingresos) { ingreso ->
+                        IngresoCard(ingreso)
+                    }
+
+                    item {
+                        Text(
+                            text = "Total según método de pago:",
+                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                            textAlign = TextAlign.Center // Centrar el título
+                        )
+                    }
+
+                    items(facturasmetodopago) { pago ->
+                        PagoCard(pago)
+                    }
+
+                    //a partir de aqui consultas mas comunes
                     item {
                         Text(
                             text = "Reservaciones Totales:",
@@ -275,39 +326,6 @@ fun ReportScreen(navController: NavHostController) {
                         ReservationCard(reservation)
                     }
 
-                    // Título para las Reservaciones por estado
-                    item {
-                        Text(
-                            text = "Reservaciones por estado:",
-                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            textAlign = TextAlign.Center // Centrar el título
-                        )
-                    }
-
-                    // Displaying new reservations by estado
-                    items(newReservations) { newReservation ->
-                        NewReservationCard(newReservation)
-                    }
-
-                    // Título para los Ingresos
-                    item {
-                        Text(
-                            text = "Ingresos por tipo de paquete:",
-                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            textAlign = TextAlign.Center // Centrar el título
-                        )
-                    }
-
-                    // Displaying ingresos data
-                    items(ingresos) { ingreso ->
-                        IngresoCard(ingreso)
-                    }
 
                     item {
                         Text(
@@ -363,20 +381,7 @@ fun ReportScreen(navController: NavHostController) {
                         FacturasTodasCard(facturaall)
                     }
 
-                    item {
-                        Text(
-                            text = "Total de Pagos por Metodo:",
-                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            textAlign = TextAlign.Center // Centrar el título
-                        )
-                    }
 
-                    items(facturasmetodopago) { pago ->
-                        PagoCard(pago)
-                    }
                 }
 
             }

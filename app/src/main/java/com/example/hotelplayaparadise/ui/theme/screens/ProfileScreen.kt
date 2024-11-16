@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -43,11 +44,9 @@ import com.example.hotelplayaparadise.ui.theme.theme.greenstrong
 
 @Composable
 fun ProfileScreen(navController: NavHostController) {
-    // Pantalla de Perfil mejorada
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
             .background(
                 Brush.sweepGradient(
                     0.0f to Color(0xFF238C98), // Color inicial: verde azulado
@@ -56,83 +55,90 @@ fun ProfileScreen(navController: NavHostController) {
                     center = Offset(0.5f, 0.5f)
                 )
             ), // Fondo gradiente
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top // Organiza elementos desde la parte superior
+        contentAlignment = Alignment.TopCenter
     ) {
-        // Imagen de perfil circular
-        Image(
-            painter = painterResource(id = R.drawable.baseline_person_24),
-
-            contentDescription = "Imagen de perfil",
+        Column(
             modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape)
-                .border(2.dp, Color.White, CircleShape)
-                .padding(8.dp),
-            colorFilter = ColorFilter.tint(Color.White)
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Nombre de usuario
-        Text(
-            text = "Team Paradise", // Reemplaza con el nombre del usuario
-            style = MaterialTheme.typography.headlineMedium.copy(
-                color = Color.White,
-                fontWeight = FontWeight.Bold
+                .fillMaxSize()
+                .padding(top = 32.dp, start = 16.dp, end = 16.dp), // Aplica padding solo aquí
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Imagen de perfil circular
+            Image(
+                painter = painterResource(id = R.drawable.baseline_person_24),
+                contentDescription = "Imagen de perfil",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, Color.White, CircleShape)
+                    .padding(8.dp),
+                colorFilter = ColorFilter.tint(Color.White)
             )
-        )
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        // Email del usuario
-        Text(
-            text = "HotelPlayaParadise@outlook.com", // Reemplaza con el correo del usuario
-            style = MaterialTheme.typography.bodyLarge.copy(color = Color.LightGray)
-        )
+            // Nombre de usuario
+            Text(
+                text = "Team Paradise", // Reemplaza con el nombre del usuario
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            )
 
-        Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        // Botones de acciones: Editar perfil y Cerrar sesión
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            // Botón de editar perfil
-            Button(
-                onClick = { /* Acción para editar perfil */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1E88E5))
+            // Email del usuario
+            Text(
+                text = "HotelPlayaParadise@outlook.com", // Reemplaza con el correo del usuario
+                style = MaterialTheme.typography.bodyLarge.copy(color = Color.LightGray)
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Botones de acciones: Editar perfil y Cerrar sesión
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Icon(Icons.Default.Edit, contentDescription = "Editar perfil", tint = Color.White)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Editar Perfil", color = Color.White)
+                // Botón de editar perfil
+                Button(
+                    onClick = { /* Acción para editar perfil */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1E88E5))
+                ) {
+                    Icon(Icons.Default.Edit, contentDescription = "Editar perfil", tint = Color.White)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "Editar Perfil", color = Color.White)
+                }
+
+                // Botón de cerrar sesión
+                Button(
+                    onClick = { /* Acción para cerrar sesión */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F))
+                ) {
+                    Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar sesión", tint = Color.White)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(text = "Cerrar Sesión", color = Color.White)
+                }
             }
 
-            // Botón de cerrar sesión
+            Spacer(modifier = Modifier.height(100.dp)) // Espaciado fijo antes del botón
+
+            // Botón para volver a la pantalla principal
             Button(
-                onClick = { /* Acción para cerrar sesión */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F))
+                onClick = { navController.navigate("home") },
+                modifier = Modifier
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .padding(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = greenstrong)
             ) {
-                Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar sesión", tint = Color.White)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Cerrar Sesión", color = Color.White)
+                Text(text = "Volver al Menú", color = Color.White)
             }
-        }
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        // Botón para volver a la pantalla principal
-        Button(
-            onClick = { navController.navigate("home") },
-            modifier = Modifier
-                .wrapContentWidth(Alignment.CenterHorizontally)
-                .padding(16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = greenstrong)
-        ) {
-            Text(text = "Volver al Menú", color = Color.White)
         }
     }
 }
+
+
 
 // Función de previsualización
 @Preview(showBackground = true)
